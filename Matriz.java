@@ -1,5 +1,6 @@
 public class Matriz {
     private String[][] matriz = new String[5][6];
+    private Integer[][] salas = new Integer[5][6];
 
     public void carregarSalas(){
         matriz[1][0] = "Sala A-1";
@@ -37,8 +38,9 @@ public class Matriz {
         matriz[0][5] = "14:30 --";
     }
 
-
-
+    public boolean salaDisponivel(int sala, int horario) {
+        return matriz[sala][horario] == null;
+    }   
     public void imprimirMatriz()
     {
         for (int i = 0; i < matriz.length; i++) {
