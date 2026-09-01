@@ -1,6 +1,5 @@
 public class Matriz {
     private String[][] matriz = new String[5][6];
-    private Integer[][] salas = new Integer[5][6];
 
     public void carregarSalas(){
         matriz[1][0] = "Sala A-1";
