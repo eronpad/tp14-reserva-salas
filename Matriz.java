@@ -1,5 +1,6 @@
 public class Matriz {
     private String[][] matriz = new String[5][6];
+    private boolean[][] reservado = new boolean[5][6];
 
     public void carregarSalas(){
         matriz[1][0] = "Sala A-1";
@@ -38,8 +39,42 @@ public class Matriz {
     }
 
     public boolean salaDisponivel(int sala, int horario) {
-        return matriz[sala][horario] == null;
-    }   
+        return !reservado[sala][horario];
+    }
+
+    public void reservarSala(int sala, int horario, String responsavel) {
+        if (salaDisponivel(sala, horario)) {
+            reservado[sala][horario] = true;
+            System.out.println(matriz[sala][horario] + " reservada para " + responsavel + " no horario " + matriz[0][horario]);
+        } else {
+            System.out.println(matriz[sala][horario] + " ja esta reservada nesse horario");
+        }
+    }
+
+    public void consultarSala(int sala) {
+        System.out.println("Consulta da sala, linha " + sala + ":");
+        for (int j = 0; j < matriz[sala].length; j++) {
+            String status = reservado[sala][j] ? "Reservado" : "Livre";
+            System.out.println(matriz[0][j] + " " + matriz[sala][j] + " -- " + status);
+        }
+    }
+
+    public void exibirGradeHorarios() {
+        System.out.print("          ");
+        for (int j = 0; j < matriz[0].length; j++) {
+            System.out.print(matriz[0][j] + " ");
+        }
+        System.out.println();
+        for (int i = 1; i < matriz.length; i++) {
+            System.out.print("Linha " + i + "  ");
+            for (int j = 0; j < matriz[i].length; j++) {
+                String status = reservado[i][j] ? "OCUPADO " : "LIVRE   ";
+                System.out.print(status);
+            }
+            System.out.println();
+        }
+    }
+
     public void imprimirMatriz()
     {
         for (int i = 0; i < matriz.length; i++) {
