@@ -18,9 +18,9 @@ public class Main {
             exibirMenu();
             opcao = entrada.nextInt();
             switch (opcao) {
-                case 1: /* funcionalidade do Desenvolvedor A */ break;
+                case 1: reservar(); break;
                 case 2: cancelarReserva(); break;
-                case 3: /* funcionalidade do Desenvolvedor A */ break;
+                case 3: consultar(); break;
                 case 4: exibirGradeHorarios(); break;
                 case 0: System.out.println("Encerrando..."); break;
                 default: System.out.println("Opcao invalida!");
@@ -44,7 +44,6 @@ public class Main {
         System.out.print("Escolha: ");
     }
 
-
     static boolean salaDisponivel(int sala, int horario) {
         return reservas[sala][horario] == null;
     }
@@ -55,6 +54,50 @@ public class Main {
             System.out.println(nomesSalas[sala] + " reservada para " + responsavel + " no horario " + horarios[horario]);
         } else {
             System.out.println(nomesSalas[sala] + " ja esta reservada nesse horario");
+        }
+    }
+
+    // Funcionalidade do Desenvolvedor A (case 1) - reservar uma sala
+    static void reservar() {
+
+        int s;
+        int h;
+        while (true) {
+            try {
+                System.out.print("Digite o número da sala: ");
+                s = entrada.nextInt();
+                if (s < 0 || s > 4)
+                    System.out.println("Insira um valor entre 0 a 4!");
+                else
+                    break;
+            }
+            catch (Exception e) {
+                System.out.println("Digite um valor válido!");
+                entrada.nextLine();
+            }
+        }
+        while (true) {
+            try {
+                System.out.print("Digite o índice do horário: ");
+                h = entrada.nextInt();
+                if (h < 0 || h > 5)
+                    System.out.println("Insira um valor entre 0 a 5!");
+                else
+                    break;
+            }
+            catch (Exception e) {
+                System.out.println("Digite um valor válido!");
+                entrada.nextLine();
+            }
+        }
+
+        if (salaDisponivel(s, h)) {
+            entrada.nextLine(); // limpa o buffer antes de ler o nome
+            System.out.print("Digite seu nome para a reserva: ");
+            String nome = entrada.nextLine();
+            reservarSala(s, h, nome);
+        } else {
+            System.out.println(nomesSalas[s] + " ja esta reservada nesse horario");
         }
     }
 
@@ -97,6 +140,7 @@ public class Main {
                     + " (" + horarios[h] + ") cancelada");
             reservas[s][h] = null;
         } else {
+
             System.out.println(nomesSalas[s] + " ja esta livre nesse horario");
         }
     }
@@ -107,6 +151,28 @@ public class Main {
             String status = reservas[sala][h] != null ? "Reservado (" + reservas[sala][h] + ")" : "Livre";
             System.out.println(horarios[h] + " -- " + status);
         }
+    }
+
+    // Funcionalidade do Desenvolvedor A (case 3) - consultar uma sala
+    static void consultar() {
+
+        int s;
+        while (true) {
+            try {
+                System.out.print("Digite o número da sala: ");
+                s = entrada.nextInt();
+                if (s < 0 || s > 4)
+                    System.out.println("Insira um valor entre 0 a 4!");
+                else
+                    break;
+            }
+            catch (Exception e) {
+                System.out.println("Digite um valor válido!");
+                entrada.nextLine();
+            }
+        }
+
+        consultarSala(s);
     }
 
     static void exibirGradeHorarios() {
