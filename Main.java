@@ -3,36 +3,47 @@ import java.util.Scanner;
 public class Main {
     //NAO MUDAR A ORDEM, as vezes buga, pq eu nsei mas da merda na hora de compilar 
 
+    static Scanner entrada = new Scanner(System.in);
+
     static String[] nomesSalas = {"", "Sala 1", "Sala 2", "Sala 3", "Sala 4"};
     static String[] horarios = {"8:00", "9:00", "10:00", "11:00", "12:00", "13:00"};
 
     static String[][] reservas = new String[5][6];
 
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
 
-        exibirGradeHorarios();
+        int opcao;
+        do {
+            exibirCabecalho(); // <== METODO COMPARTILHADO (ponto de conflito)
+            exibirMenu();
+            opcao = entrada.nextInt();
+            switch (opcao) {
+                case 1: /* funcionalidade do Desenvolvedor A */ break;
+                case 2: cancelarReserva(); break;
+                case 3: /* funcionalidade do Desenvolvedor A */ break;
+                case 4: exibirGradeHorarios(); break;
+                case 0: System.out.println("Encerrando..."); break;
+                default: System.out.println("Opcao invalida!");
+            }
+        } while (opcao != 0);
+        entrada.close();
 
-        System.out.println("\nDigite uma sala para a sua reserva (de 1 a 4): ");
-        int sala = scan.nextInt();
-        System.out.println("Digite um horario (1 a 6): ");
-        int horario = scan.nextInt();
-        horario -= 1;
-
-        if (salaDisponivel(sala, horario)) {
-            System.out.println("Digite seu nome para a reserva: ");
-            scan.nextLine();
-            String nome = scan.nextLine();
-            reservarSala(sala, horario, nome);
-        } else {
-            System.out.println("Nao disponivel");
-        }
-
-        consultarSala(sala);
-        exibirGradeHorarios();
-
-        scan.close();
     }
+
+    public static void exibirCabecalho() {
+        System.out.println("==============================");
+        System.out.println(" Reserva de Salas ");
+        System.out.println("==============================");
+    }
+    public static void exibirMenu() {
+        System.out.println("1 - Reservar Sala");
+        System.out.println("2 - Cancelar Reserva");
+        System.out.println("3 - Consultar");
+        System.out.println("4 - Exibir Grade");
+        System.out.println("0 - Sair");
+        System.out.print("Escolha: ");
+    }
+
 
     static boolean salaDisponivel(int sala, int horario) {
         return reservas[sala][horario] == null;
@@ -47,13 +58,46 @@ public class Main {
         }
     }
 
-    static void cancelarReserva(int sala, int horario) {
-        if (!salaDisponivel(sala, horario)) {
-            System.out.println("Reserva de " + reservas[sala][horario] + " na " + nomesSalas[sala]
-                    + " (" + horarios[horario] + ") cancelada");
-            reservas[sala][horario] = null;
+    static void cancelarReserva() {
+
+        int s;
+        int h;
+        while (true) {
+            try {
+                System.out.print("Digite o número da sala: ");
+                s = entrada.nextInt();
+                if (s < 0 || s > 4)
+                    System.out.println("Insira um valor entre 0 a 4!");
+                else
+                    break;
+            }
+            catch (Exception e) {
+                System.out.println("Digite um valor válido!");
+                entrada.nextLine();
+            }
+        }
+        while (true) {
+            try {
+                System.out.print("Digite o índice do horário: ");
+                h = entrada.nextInt();
+                if (h < 0 || h > 5)
+                    System.out.println("Insira um valor entre 0 a 5!");
+                else
+                    break;
+            }
+            catch (Exception e) {
+                System.out.println("Digite um valor válido!");
+                entrada.nextLine();
+            }
+        }
+
+
+        if (!salaDisponivel(s, h)) {
+            System.out.println("Reserva de " + reservas[s][h] + " na " + nomesSalas[s]
+                    + " (" + horarios[h] + ") cancelada");
+            reservas[s][h] = null;
         } else {
-            System.out.println(nomesSalas[sala] + " ja esta livre nesse horario");
+            System.out.println(nomesSalas[s] + " ja esta livre nesse horario");
         }
     }
 
