@@ -7,5 +7,10 @@ public class Main{
         minhaMatriz.carregarHorarios();
         minhaMatriz.imprimirMatriz();
     
-}
+    }
+
+    static void cancelarReserva() {
+
+    }
+
 }
