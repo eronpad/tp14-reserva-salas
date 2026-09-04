@@ -1,6 +1,6 @@
 public class Main{
 
-    static String[][] salas = new String[5][6];
+    static boolean[][] salas = new boolean[5][6];
 
     public static void main (String[] args)
     {
@@ -14,23 +14,25 @@ public class Main{
             return;
         }
 
-        if (salas[sala][horario] == null)
+        if (!salas[sala][horario])
         {
             System.out.println("A sala já está disponível nesse horário!");
             return;
         }
 
-        salas[sala][horario] = null;
+        salas[sala][horario] = false;
         System.out.println("Reserva cancelada!");
 
     }
 
     static void exibirGradeHorarios() {
+        System.out.print("           8:00        9:00       10:00       11:00       12:00       13:00 ");
+        System.out.println();
         for (int s = 0; s < salas.length; s++)
         {
             System.out.print("Sala " + (s+1) + " ");
             for (int h = 0; h < salas[s].length; h++) {
-                System.out.print(" " + salas[s][h] + " ");
+                System.out.print(" " + (salas[s][h] ? "Reservado" : "Disponível") + " ");
             }
             System.out.println();
         }
