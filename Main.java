@@ -4,12 +4,7 @@ public class Main{
 
     public static void main (String[] args)
     {
-        Matriz minhaMatriz = new Matriz();
-
-        minhaMatriz.carregarSalas();
-        minhaMatriz.carregarHorarios();
-        minhaMatriz.imprimirMatriz();
-
+        exibirGradeHorarios();
     }
 
     static void cancelarReserva(int sala, int horario) {
@@ -31,7 +26,14 @@ public class Main{
     }
 
     static void exibirGradeHorarios() {
-        
+        for (int s = 0; s < salas.length; s++)
+        {
+            System.out.print("Sala " + (s+1) + " ");
+            for (int h = 0; h < salas[s].length; h++) {
+                System.out.print(" " + salas[s][h] + " ");
+            }
+            System.out.println();
+        }
     }
 
 }
