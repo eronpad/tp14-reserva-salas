@@ -12,8 +12,22 @@ public class Main{
 
     }
 
-    static void cancelarReserva() {
-        
+    static void cancelarReserva(int sala, int horario) {
+        if ((sala < 0 || sala >= salas.length) || (horario < 0 || horario >= salas[0].length))
+        {
+            System.out.println("Sala ou horário inválido(s)!");
+            return;
+        }
+
+        if (salas[sala][horario] == null)
+        {
+            System.out.println("A sala já está disponível nesse horário!");
+            return;
+        }
+
+        salas[sala][horario] = null;
+        System.out.println("Reserva cancelada!");
+
     }
 
 }
